@@ -5,7 +5,7 @@ CREATE TABLE public.pacientes (
     edad integer NOT NULL,
     created_at timestamp default now(),
     update_at timestamp,
-    deleted_at timestamp
+    deleted_at timestamp,
     PRIMARY KEY(id)
 );
 

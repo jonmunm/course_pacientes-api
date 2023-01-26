@@ -1,5 +1,5 @@
 var app = require('./server');
-
+console.log(process.env.NODE_ENV)
 const PORT = 3000
 
 app.listen(PORT, () => {
