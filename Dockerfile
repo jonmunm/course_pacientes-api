@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 RUN npm install
 EXPOSE 3000
-CMD ["ls -lha",  "npm", "start"]
+CMD ["node", "app.js"]
 #"/bin/sh", "NODE_ENV=Production", "node", "app.js"
 
 #"/bin/sh", "NODE_ENV=Production", "node", "app.js"
