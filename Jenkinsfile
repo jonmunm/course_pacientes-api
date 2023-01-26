@@ -9,7 +9,7 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Integration tests') {
+        stage('Unit tests') {
             steps {
                 sh 'NODE_ENV=STAGE npm run unit-test'
             }
