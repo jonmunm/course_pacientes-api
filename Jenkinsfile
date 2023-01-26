@@ -13,7 +13,7 @@ pipeline {
             stages {
                 stage('Integration tests') {
                     steps {
-                        sh 'npm run integration-test'
+                        sh 'NODE_ENV=STAGE npm run integration-test'
                     }
                 }
             }
