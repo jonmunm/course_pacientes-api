@@ -12,9 +12,7 @@ describe('Paciente Body Validator', () => {
                     'edad' : 1
                 }
 
-                assert.doesNotThrow(() => pacienteBodyValidator.save(paciente), ValidationError);
-                //expect(() => pacienteBodyValidator.save(paciente))
-                //    .to.throw(ValidationError, 'Debe contener dos nombres')
+                assert.throw(() => pacienteBodyValidator.save(paciente), ValidationError);
 
                 return Promise.resolve()
             } catch (error) {
