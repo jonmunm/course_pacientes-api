@@ -9,14 +9,18 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Unit tests') {
-            steps {
-                sh 'NODE_ENV=STAGE npm run unit-test'
-            }
-        }
-        stage('Integration tests') {
-            steps {
-                sh 'NODE_ENV=STAGE npm run integration-test'
+        stage('Test') {
+            parallel {
+                stage('Unit') {
+                    steps {
+                        sh 'NODE_ENV=STAGE npm run unit-test'
+                    }
+                }
+                stage('Integration') {
+                    steps {
+                        sh 'NODE_ENV=STAGE npm run integration-test'
+                    }
+                }
             }
         }
         stage('Deploy') {
