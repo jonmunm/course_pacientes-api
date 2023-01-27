@@ -35,8 +35,9 @@ pipeline {
                 }
                 stage('Deploy to docker registry') {
                     steps {
-                        echo 'Deploying to docker registry....'
                         dockerImage = docker.build("jonmunm/pacientes-api:latest")
+                    }
+                    steps {
                         withDockerRegistry([ credentialsId: "jonmunm_id", url: "" ]) {
                             dockerImage.push()
                         }
