@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
+    "start": "NODE_ENV=DEVELOPMENT node app.js",
+    "start:stage": "NODE_ENV=STAGE node app.js",
+    "start:production": "NODE_ENV=PRODUCTION node app.js",
     "start:watch": "nodemon app.js",
     "lint:fix": "eslint --fix .",
     "unit-test": "mocha ./tests/unit/pacientes.js",
