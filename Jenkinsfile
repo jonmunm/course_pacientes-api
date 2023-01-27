@@ -33,13 +33,17 @@ pipeline {
                         echo 'Deploying to production....'
                     }
                 }
-                stage('Deploy to docker registry') {
-                    steps {
-                        dockerImage = docker.build("jonmunm/pacientes-api:latest")
+                stages('Deploy to docker registry') {
+                    stage('Build image') {
+                        steps {
+                            dockerImage = docker.build("jonmunm/pacientes-api:latest")
+                        }
                     }
-                    steps {
-                        withDockerRegistry([ credentialsId: "jonmunm_id", url: "" ]) {
-                            dockerImage.push()
+                    stage('Push image') {
+                        steps {
+                            withDockerRegistry([ credentialsId: "jonmunm_id", url: "" ]) {
+                                dockerImage.push()
+                            }
                         }
                     }
                 }
