@@ -36,17 +36,13 @@ pipeline {
                 stage('Deploy to docker registry') {
                     steps {
                         echo 'Deploying to docker registry....'
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                        sh 'docker build -t jonmunm/pacientes-api:latest .'
-                        sh 'docker push jonmunm/pacientes-api:latest'
+                        dockerImage = docker.build("jonmunm/pacientes-api:latest")
+                        withDockerRegistry([ credentialsId: "jonmunm_id", url: "" ]) {
+                            dockerImage.push()
+                        }
                     }
                 }
             }
         }
     }
-	post {
-		always {
-			sh 'docker logout'
-		}
-	}
 }
