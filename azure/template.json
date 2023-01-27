@@ -1,0 +1,273 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containerGroups_pacientes_api_stage_name": {
+            "defaultValue": "pacientes-api-stage",
+            "type": "String"
+        },
+        "containerGroups_pacientes_api_production_name": {
+            "defaultValue": "pacientes-api-production",
+            "type": "String"
+        },
+        "containerGroups_paciantes_api_database_stage_name": {
+            "defaultValue": "paciantes-api-database-stage",
+            "type": "String"
+        },
+        "containerGroups_pacientes_api_database_production_name": {
+            "defaultValue": "pacientes-api-database-production",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2021-10-01",
+            "name": "[parameters('containerGroups_paciantes_api_database_stage_name')]",
+            "location": "ukwest",
+            "tags": {
+                "stage": "stage",
+                "type": "database"
+            },
+            "properties": {
+                "sku": "Standard",
+                "containers": [
+                    {
+                        "name": "[parameters('containerGroups_paciantes_api_database_stage_name')]",
+                        "properties": {
+                            "image": "postgres",
+                            "ports": [
+                                {
+                                    "protocol": "TCP",
+                                    "port": 80
+                                },
+                                {
+                                    "protocol": "TCP",
+                                    "port": 5432
+                                }
+                            ],
+                            "environmentVariables": [
+                                {
+                                    "name": "POSTGRES_PASSWORD",
+                                    "value": "051286"
+                                }
+                            ],
+                            "resources": {
+                                "requests": {
+                                    "memoryInGB": 12,
+                                    "cpu": 4
+                                }
+                            }
+                        }
+                    }
+                ],
+                "initContainers": [],
+                "restartPolicy": "Never",
+                "ipAddress": {
+                    "ports": [
+                        {
+                            "protocol": "TCP",
+                            "port": 80
+                        },
+                        {
+                            "protocol": "TCP",
+                            "port": 5432
+                        }
+                    ],
+                    "ip": "20.254.169.220",
+                    "type": "Public"
+                },
+                "osType": "Linux"
+            }
+        },
+        {
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2021-10-01",
+            "name": "[parameters('containerGroups_pacientes_api_database_production_name')]",
+            "location": "norwaywest",
+            "tags": {
+                "stage": "production",
+                "type": "database"
+            },
+            "properties": {
+                "sku": "Standard",
+                "containers": [
+                    {
+                        "name": "[parameters('containerGroups_pacientes_api_database_production_name')]",
+                        "properties": {
+                            "image": "postgres",
+                            "ports": [
+                                {
+                                    "protocol": "TCP",
+                                    "port": 80
+                                },
+                                {
+                                    "protocol": "TCP",
+                                    "port": 5432
+                                }
+                            ],
+                            "environmentVariables": [
+                                {
+                                    "name": "POSTGRES_PASSWORD",
+                                    "value": "051286"
+                                }
+                            ],
+                            "resources": {
+                                "requests": {
+                                    "memoryInGB": 12,
+                                    "cpu": 4
+                                }
+                            }
+                        }
+                    }
+                ],
+                "initContainers": [],
+                "restartPolicy": "Never",
+                "ipAddress": {
+                    "ports": [
+                        {
+                            "protocol": "TCP",
+                            "port": 80
+                        },
+                        {
+                            "protocol": "TCP",
+                            "port": 5432
+                        }
+                    ],
+                    "ip": "51.13.155.245",
+                    "type": "Public"
+                },
+                "osType": "Linux"
+            }
+        },
+        {
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2021-10-01",
+            "name": "[parameters('containerGroups_pacientes_api_production_name')]",
+            "location": "canadaeast",
+            "tags": {
+                "stage": "production",
+                "type": "api"
+            },
+            "properties": {
+                "sku": "Standard",
+                "containers": [
+                    {
+                        "name": "[parameters('containerGroups_pacientes_api_production_name')]",
+                        "properties": {
+                            "image": "jonmunm/pacientes-api:0.0.10",
+                            "command": [
+                                "npm",
+                                "run",
+                                "start:production"
+                            ],
+                            "ports": [
+                                {
+                                    "protocol": "TCP",
+                                    "port": 80
+                                },
+                                {
+                                    "protocol": "TCP",
+                                    "port": 3000
+                                }
+                            ],
+                            "environmentVariables": [],
+                            "resources": {
+                                "requests": {
+                                    "memoryInGB": 12,
+                                    "cpu": 4
+                                }
+                            }
+                        }
+                    }
+                ],
+                "initContainers": [],
+                "imageRegistryCredentials": [
+                    {
+                        "server": "index.docker.io",
+                        "username": "jonmunm"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "ipAddress": {
+                    "ports": [
+                        {
+                            "protocol": "TCP",
+                            "port": 80
+                        },
+                        {
+                            "protocol": "TCP",
+                            "port": 3000
+                        }
+                    ],
+                    "ip": "52.242.16.93",
+                    "type": "Public"
+                },
+                "osType": "Linux"
+            }
+        },
+        {
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2021-10-01",
+            "name": "[parameters('containerGroups_pacientes_api_stage_name')]",
+            "location": "japanwest",
+            "properties": {
+                "sku": "Standard",
+                "containers": [
+                    {
+                        "name": "[parameters('containerGroups_pacientes_api_stage_name')]",
+                        "properties": {
+                            "image": "jonmunm/pacientes-api:0.0.10",
+                            "command": [
+                                "npm",
+                                "run",
+                                "start:stage"
+                            ],
+                            "ports": [
+                                {
+                                    "protocol": "TCP",
+                                    "port": 80
+                                },
+                                {
+                                    "protocol": "TCP",
+                                    "port": 3000
+                                }
+                            ],
+                            "environmentVariables": [],
+                            "resources": {
+                                "requests": {
+                                    "memoryInGB": 12,
+                                    "cpu": 4
+                                }
+                            }
+                        }
+                    }
+                ],
+                "initContainers": [],
+                "imageRegistryCredentials": [
+                    {
+                        "server": "index.docker.io",
+                        "username": "jonmunm"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "ipAddress": {
+                    "ports": [
+                        {
+                            "protocol": "TCP",
+                            "port": 80
+                        },
+                        {
+                            "protocol": "TCP",
+                            "port": 3000
+                        }
+                    ],
+                    "ip": "20.27.64.2",
+                    "type": "Public"
+                },
+                "osType": "Linux"
+            }
+        }
+    ]
+}

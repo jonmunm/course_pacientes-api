@@ -20,8 +20,13 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+            parallel {
+                stage('Deploy to production') {
+                    echo 'Deploying to production....'
+                }
+                stage('Deploy to docker registry') {
+                    echo 'Deploying to docker registry....'
+                }
             }
         }
     }
