@@ -2,10 +2,6 @@ pipeline {
     agent {
         docker { image 'node:18-alpine' }
     }
-    environment {
-		DOCKERHUB_CREDENTIALS=credentials('jonmunm_id')
-	}
-
     stages {
         stage('Build') {
             steps {
@@ -39,13 +35,13 @@ pipeline {
                             dockerImage = docker.build("jonmunm/pacientes-api:latest")
                         }
                     }
-                    stage('Push image') {
+                    /*stage('Push image') {
                         steps {
                             withDockerRegistry([ credentialsId: "jonmunm_id", url: "" ]) {
                                 dockerImage.push()
                             }
                         }
-                    }
+                    }*/
                 }
             }
         }
