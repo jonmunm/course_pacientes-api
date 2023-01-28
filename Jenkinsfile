@@ -31,8 +31,9 @@ pipeline {
                 }
                 stage('Build image') {
                     steps {
-                        dockerImage = docker.build("jonmunm/pacientes-api:latest")
-                        echo 'Image built'
+                        script {
+                            dockerImage = docker.build("jonmunm/pacientes-api:latest")
+                        }
                     }
                 }
 
