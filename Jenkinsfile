@@ -1,14 +1,14 @@
 pipeline {
-    agent {
-        docker { 
-            image 'node:18-alpine' 
-            args '-u root:root'
-        }
-    }
-    environment {
+    /*environment {
         PATH = "/bin:/usr/bin:usr/local/bin"
-    }
+    }*/
     stages {
+        agent {
+            docker { 
+                image 'node:18-alpine' 
+                args '-u root:root'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'npm install'
@@ -28,6 +28,8 @@ pipeline {
                 }
             }
         }
+    }
+    stages{
         stage('Deploy') {
             parallel {
                 stage('Deploy to production') {
