@@ -35,10 +35,10 @@ pipeline {
                 stage('Build image') {
                     agent any 
                     steps {
-                        script {
+                        /*script {
                             dockerImage = docker.build("jonmunm/pacientes-api:latest")
-                        }
-                        //sh '/usr/bin/docker build -t jonmunm/pacientes-api:latest .'
+                        }*/
+                        sh 'docker build -t jonmunm/pacientes-api:latest .'
                     }
                 }
 
