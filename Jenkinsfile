@@ -6,6 +6,10 @@ pipeline {
         }
     }
     stages {
+        stage('Initialize')
+        {
+            env.PATH = "/usr/bin:${env.PATH}"
+        }
         stage('Build') {
             steps {
                 sh 'npm install'
